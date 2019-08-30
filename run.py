@@ -1,10 +1,23 @@
 import os
 from flask import Flask
 
-app = flask (__name__)
+app = Flask(__name__)
 
-@app.route('/')
+
+@app.route("/")
 def index():
-    return "<h1>Hello There!<h1>"
-    
-app.run(host=os.getenv('IP'),port=int(os.getenv('PORT')), debug=True)
+    """Main page with instructions"""
+    return "To send a message use: /USERNAME/MESSAGE"
+
+
+@app.route("/<username>")
+def user(username):
+    return "Hi " + username
+
+
+@app.route("/<username>/<message>")
+def send_message(username, message):
+    return "{0}: {1}".format(username, message)
+
+
+app.run(host=os.getenv("IP"), port=int(os.getenv("PORT")), debug=True)
